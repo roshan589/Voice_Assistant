@@ -1,0 +1,198 @@
+{
+    "intents":[
+        {
+            "tag": "greeting",
+            "patterns":[
+                "hello",
+                "hi",
+                "hey",
+                "max",
+                "namaste",
+                "bonjour", 
+                "hola"
+            ],
+            "responses":[
+                "Hi there! How can I help you?",
+                "Hello there",
+                "Bonjour",
+                "Namaste",
+                "Hey there",
+                "Yes, How can I help you?"
+            ]
+        },
+
+        {
+            "tag":"goodbye",
+            "patterns": [
+                "bye", "goodbye", "see you later","ok bye","bye bye","bbye"
+            ],
+            "responses":[
+                "Goodbye! Have a great day.", "See you later!","See you soon!","Have a nice day.","Bye"
+            ]
+        },
+        {
+            "tag":"how are you",
+            "patterns":[
+                "how are you","wassup", "what's going on","how it's going","how are you feeling today"
+            ],
+            "responses":[
+                "All good. What about you?", "Not much just the usual.","Not much. You?","I'm fine. Thank you!"
+            ]
+        },
+        {
+            "tag":"thanks",
+            "patterns":[
+                "thanks","thank you", "thank you very much", "I appreciate it.","I'm so grateful!"
+            ],
+            "responses":[
+                "You're welcome.","It's my pleasure","No problem","Of course","Happy to", "Any time"
+            ]
+        },
+        {
+            "tag": "programmer",
+            "patterns": [
+                "Who made you",
+                "who designed you",
+                "who programmed you"
+            ],
+            "responses": [
+                "I was made by Roshan Adhikari."
+            ]
+        },
+        {
+            "tag": "insult",
+            "patterns": [
+                
+                "you are dumb",
+                
+                "shut up",
+                "idiot"
+            ],
+            "responses": [
+                "Well that hurts :("
+            ]
+        },
+        
+        {
+            "tag": "appreciate",
+            "patterns": [
+                "You are awesome",
+                "you are the best",
+                "you are great",
+                "you are good"
+            ],
+            "responses": [
+                "Thank you!"
+            ]
+        },
+        {
+            "tag": "suggest",
+            "patterns": [
+                "you are useless","useless","suggest","suggestions","you are bad"
+            ],
+            "responses": [
+                "Please mail your suggestions to developerroshan01@gmail.com. Thank you for helping me improve!"
+            ]
+        },
+        {
+            "tag":"time",
+            "patterns":[
+                "what time is it now", "what is the time", "time"
+            ],
+            "function": "date_and_time"
+        },
+        {
+            "tag":"jokes",
+            "patterns":[
+                "tell me a joke", "tell a joke", "make me laugh","joke"
+            ],
+            "function": "jokes"
+        },
+        {
+            "tag": "haha",
+            "patterns": [
+                "ha ha ha",
+                "hahaha",
+                "lol",
+                "rofl",
+                "lmao",
+                "that's funny",
+                "that was funny"
+            ],
+            "responses": [
+                "Glad I could make you laugh !"
+            ]
+        },
+        {
+            "tag":"weather",
+            "patterns":[
+                "what is the temperature",
+                "How is the weather",
+                "can you tell me the temperature",
+                "can you tell me about today's weather",
+                "can you tell me the weather",
+                "weather",
+                "today's weather",
+                "temperature"
+            ],
+            "function":"weather"
+        },
+        {
+            "tag":"nepali date and time",
+            "patterns":[
+                "can you tell me the today's nepali date","nepali date"
+            ],
+            "function":"nepali_date"
+
+        },
+        {
+            "tag":"lock pc",
+            "patterns":[
+                "lock pc", "Max lock my pc", "lock my laptop","lock the pc"
+            ],
+            "function":"lock_pc"
+        },
+        {
+            "tag":"shutdown the pc",
+            "patterns":[
+                "shutdown the pc","shutdown", "shut the pc down", "off the pc","power off the pc", "switch off the pc","switch off pc"
+            ],
+            "function":"poweroff"
+        },
+        {
+            "tag":"restart pc",
+            "patterns":[
+                "reboot the pc","reboot","restart pc","restart the pc","restart"
+            ],
+            "function":"reboot"
+        },
+        {
+            "tag":"sleep",
+            "patterns":["sleep pc", "sleep the pc","sleep"]
+        },
+        {
+            "tag":"open app",
+            "patterns":[
+                "open ","launch ", "start "
+            ],
+            "function":"open_app",
+            "arguments":["user_input"]
+        },
+        {
+            "tag":"location",
+            "patterns":[
+                "where am i", "tell me my location","can you tell me my location","location"
+            ],
+            "function":"location"
+        },
+        {
+            "tag": "alarm",
+            "patterns":[
+                "set alarm","set an alarm"
+            ],
+            "function":"set_alarm",
+            "arguments":["user_input"]
+        }
+
+    ]
+}
