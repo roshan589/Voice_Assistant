@@ -28,7 +28,8 @@
             ],
             "responses":[
                 "Goodbye! Have a great day.", "See you later!","See you soon!","Have a nice day.","Bye"
-            ]
+            ],
+            "function":"exit"
         },
         {
             "tag":"how are you",

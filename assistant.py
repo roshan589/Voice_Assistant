@@ -1,5 +1,6 @@
 import json
 
+import sys
 from time import sleep 
 import webbrowser
 from click import argument
@@ -142,52 +143,12 @@ def weather():
   return f"The temperature is {temp_celsius:.2f}°C, but it feels like {temp_feels_like_celsius:.2f}°C and the weather is {weather_type}"
 
 
-def set_alarm(user_input):
-
-    if user_input == "set alarm" or user_input =="set an alarm":
-        speak("Alright, for when?")
-        print("Alright, for when?")
-        def listen_alarm():
-            with sr.Microphone() as source:
-                print("Listening...")
-                audio = speaker.listen(source,0,8)
-                speaker.adjust_for_ambient_noise(source,duration = 0.5) # type: ignore
-                try:
-                    print("Understanding...")
-                    alarm_time = speaker.recognize_google(audio, language="en",) # type: ignore
-                    alarm_time = alarm_time.replace("at","")
-                    alarm_time = alarm_time.replace("at","")
-                    alarm_time = alarm_time.replace("for","")
-                    alarm_time = alarm_time.replace(".","")
-                    alarm_time = alarm_time.upper()
-                    print("You: ",alarm_time)
-                    alarm_list = alarm_time.split(":")
-                    alarm_list[1:] = alarm_list[1].split()
-                    hour, mins, period = map(str, alarm_list)  # Move this line inside the try block
-                    return hour, mins, period
-
-                    
-                    
-                except sr.UnknownValueError:
-                    return ""
-                except sr.RequestError as e:
-                    print(f"Error with the speech recognition service; {e}")
-                    return ""
-                except TimeoutError as e:
-                    return ""
-            
-        hour, mins, period = listen_alarm()  # Call the function and get the values
-        if hour and mins and period:
-            alarm.ring_alarm(int(hour), int(mins), period)    
-        
-        
-        
-        
-
-
 def speak(text: str):
     engine.say(text)
     engine.runAndWait()
+
+def exit():
+    sys.exit()
 
 def listen():
     with sr.Microphone() as source:
