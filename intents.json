@@ -1,60 +1,55 @@
 {
-    "intents":[
+    "intents": [
         {
             "tag": "greeting",
-            "patterns":[
-                "hello",
-                "hi",
-                "hey",
-                "max",
-                "namaste",
-                "bonjour", 
-                "hola"
-            ],
-            "responses":[
-                "Hi there! How can I help you?",
-                "Hello there",
-                "Bonjour",
-                "Namaste",
-                "Hey there",
-                "Yes, How can I help you?"
-            ]
-        },
-
-        {
-            "tag":"goodbye",
             "patterns": [
-                "bye", "goodbye", "see you later","ok bye","bye bye","bbye"
+                "Hey", "Hi there", "Hello", "Good morning", "What’s up", "Yo", "Hey assistant", "Hi buddy", 
+                "Good afternoon", "Hello there", "Hey you", "Morning", "Hi voice", "What’s good", "Hey mate", 
+                "Hello friend", "Good evening", "max", "namaste", "bonjour", "hola"
             ],
-            "responses":[
-                "Goodbye! Have a great day.", "See you later!","See you soon!","Have a nice day.","Bye"
-            ],
-            "function":"exit"
-        },
-        {
-            "tag":"how are you",
-            "patterns":[
-                "how are you","wassup", "what's going on","how it's going","how are you feeling today"
-            ],
-            "responses":[
-                "All good. What about you?", "Not much just the usual.","Not much. You?","I'm fine. Thank you!"
+            "responses": [
+                "Hey there!", "Hi, how’s it going?", "Hello!", "Good to hear you!", "Hi there! How can I help you?", 
+                "Bonjour", "Namaste", "Hey there", "Yes, How can I help you?"
             ]
         },
         {
-            "tag":"thanks",
-            "patterns":[
-                "thanks","thank you", "thank you very much", "I appreciate it.","I'm so grateful!"
+            "tag": "goodbye",
+            "patterns": [
+                "Bye", "See you", "Goodbye", "Later", "Catch ya later", "Cya", "I’m out", "Take care", 
+                "See ya soon", "Peace", "Good night", "Bye bye", "Gotta go", "Talk later", "Adios", 
+                "See you around", "Night", "ok bye", "bbye"
             ],
-            "responses":[
-                "You're welcome.","It's my pleasure","No problem","Of course","Happy to", "Any time"
+            "responses": [
+                "Catch you later!", "Bye!", "Take it easy!", "See ya!", "Goodbye! Have a great day.", 
+                "See you later!", "See you soon!", "Have a nice day."
+            ],
+            "function": "exit_assistant"
+        },
+        {
+            "tag": "how_are_you",
+            "patterns": [
+                "how are you", "wassup", "what's going on", "how it's going", "how are you feeling today"
+            ],
+            "responses": [
+                " ehb ","All good. What about you?", "Not much just the usual.", "Not much. You?", "I'm fine. Thank you!"
+            ]
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "Thanks", "Thank you", "Appreciate it", "Cheers", "Thanks a lot", "Thank ya", "Much appreciated", 
+                "Grateful", "Thanks heaps", "You’re awesome", "Big thanks", "Thx", "Thank you so much", "Nice one", 
+                "Thanks man", "thank you very much", "I appreciate it.", "I'm so grateful!"
+            ],
+            "responses": [
+                "You’re welcome!", "No prob!", "Glad to help!", "Anytime!", "It's my pleasure", "No problem", 
+                "Of course", "Happy to"
             ]
         },
         {
             "tag": "programmer",
             "patterns": [
-                "Who made you",
-                "who designed you",
-                "who programmed you"
+                "Who made you", "who designed you", "who programmed you"
             ],
             "responses": [
                 "I was made by Roshan Adhikari."
@@ -63,24 +58,16 @@
         {
             "tag": "insult",
             "patterns": [
-                
-                "you are dumb",
-                
-                "shut up",
-                "idiot"
+                "you are dumb", "shut up", "idiot"
             ],
             "responses": [
-                "Well that hurts :("
+                "Well, that hurts :("
             ]
         },
-        
         {
             "tag": "appreciate",
             "patterns": [
-                "You are awesome",
-                "you are the best",
-                "you are great",
-                "you are good"
+                "You are awesome", "you are the best", "you are great", "you are good"
             ],
             "responses": [
                 "Thank you!"
@@ -89,111 +76,226 @@
         {
             "tag": "suggest",
             "patterns": [
-                "you are useless","useless","suggest","suggestions","you are bad"
+                "you are useless", "useless", "suggest", "suggestions", "you are bad"
             ],
             "responses": [
                 "Please mail your suggestions to developerroshan01@gmail.com. Thank you for helping me improve!"
             ]
         },
         {
-            "tag":"time",
-            "patterns":[
-                "what time is it now", "what is the time", "time"
+            "tag": "time",
+            "patterns": [
+                "what time is it now", "what is the time", "time", "What time is it", "Tell me the time", 
+                "What’s the time", "Current time", "Time now", "What hour is it", "Clock check"
             ],
             "function": "date_and_time"
         },
         {
-            "tag":"jokes",
-            "patterns":[
-                "tell me a joke", "tell a joke", "make me laugh","joke"
+            "tag": "jokes",
+            "patterns": [
+                "tell me a joke", "tell a joke", "make me laugh", "joke", "Got a joke", "Say something funny", 
+                "Hit me with humor", "Laugh time", "Funny one", "Crack a joke"
             ],
             "function": "jokes"
         },
         {
             "tag": "haha",
             "patterns": [
-                "ha ha ha",
-                "hahaha",
-                "lol",
-                "rofl",
-                "lmao",
-                "that's funny",
-                "that was funny"
+                "ha ha ha", "hahaha", "lol", "rofl", "lmao", "that's funny", "that was funny"
             ],
             "responses": [
-                "Glad I could make you laugh !"
+                "Glad I could make you laugh!"
             ]
         },
         {
-            "tag":"weather",
-            "patterns":[
-                "what is the temperature",
-                "How is the weather",
-                "can you tell me the temperature",
-                "can you tell me about today's weather",
-                "can you tell me the weather",
-                "weather",
-                "today's weather",
-                "temperature"
+            "tag": "weather",
+            "patterns": [
+                "what is the temperature", "How is the weather", "can you tell me the temperature", 
+                "can you tell me about today's weather", "can you tell me the weather", "weather", 
+                "today's weather", "temperature", "What’s the weather", "Weather today", "Is it raining", 
+                "Tell me the forecast"
             ],
-            "function":"weather"
+            "function": "weather"
         },
         {
-            "tag":"nepali date and time",
-            "patterns":[
-                "can you tell me the today's nepali date","nepali date"
+            "tag": "nepali_date",
+            "patterns": [
+                "can you tell me today's Nepali date", "nepali date"
             ],
-            "function":"nepali_date"
-
+            "function": "nepali_date"
         },
         {
-            "tag":"lock pc",
-            "patterns":[
-                "lock pc", "Max lock my pc", "lock my laptop","lock the pc"
+            "tag": "lock_pc",
+            "patterns": [
+                "lock pc", "Max lock my pc", "lock my laptop", "lock the pc"
             ],
-            "function":"lock_pc"
+            "function": "lock_pc"
         },
         {
-            "tag":"shutdown the pc",
-            "patterns":[
-                "shutdown the pc","shutdown", "shut the pc down", "off the pc","power off the pc", "switch off the pc","switch off pc"
+            "tag": "shutdown_pc",
+            "patterns": [
+                "shutdown the pc", "shutdown", "shut the pc down", "off the pc", "power off the pc", 
+                "switch off the pc", "switch off pc"
             ],
-            "function":"poweroff"
+            "function": "poweroff"
         },
         {
-            "tag":"restart pc",
-            "patterns":[
-                "reboot the pc","reboot","restart pc","restart the pc","restart"
+            "tag": "restart_pc",
+            "patterns": [
+                "reboot the pc", "reboot", "restart pc", "restart the pc", "restart"
             ],
-            "function":"reboot"
+            "function": "reboot"
         },
         {
-            "tag":"sleep",
-            "patterns":["sleep pc", "sleep the pc","sleep"]
+            "tag": "sleep_pc",
+            "patterns": [
+                "sleep pc", "sleep the pc", "sleep"
+            ],
+            "function": "sleep_pc"
         },
         {
-            "tag":"open app",
-            "patterns":[
-                "open ","launch ", "start "
+            "tag": "open_app",
+            "patterns": [
+                "open ", "launch ", "start ", "Open Chrome", "Launch Firefox", "Start Notepad", "Open Word", 
+                "Run Excel", "Launch Photoshop", "Open VS Code", "Start Spotify", "Run Discord", "Open Terminal"
             ],
-            "function":"open_app",
-            "arguments":["user_input"]
+            "function": "open_app",
+            "arguments": ["user_input"]
         },
         {
-            "tag":"location",
-            "patterns":[
-                "where am i", "tell me my location","can you tell me my location","location"
+            "tag": "close_software",
+            "patterns": [
+                "Close Chrome", "Shut down Firefox", "Exit Notepad", "Close Word", "Quit Excel", 
+                "Shut off Photoshop", "Close VS Code", "Stop Spotify", "Exit Discord", "Close Terminal"
             ],
-            "function":"location"
+            "responses": ["Closing it now!", "Shutting that down!"]
+        },
+        {
+            "tag": "system_control",
+            "patterns": [
+                "Shut down the PC", "Restart computer", "Log off", "Lock the screen", "Sleep mode", 
+                "Turn off system", "Reboot now", "Power down", "Sign out", "Put it to sleep"
+            ],
+            "responses": ["Shutting down—see ya!", "Restarting now!"]
+        },
+        {
+            "tag": "file_management",
+            "patterns": [
+                "Create a folder", "Delete a file", "Open a document", "Save this", "Rename the file", 
+                "Move that file", "Copy this", "New folder please", "Delete that", "Open my file"
+            ],
+            "responses": ["What’s the file or folder name?", "Handling that for you!"]
+        },
+        {
+            "tag": "location",
+            "patterns": [
+                "where am i", "tell me my location", "can you tell me my location", "location"
+            ],
+            "function": "location"
         },
         {
             "tag": "alarm",
-            "patterns":[
-                "set alarm","set an alarm"
+            "patterns": [
+                "set alarm", "set an alarm", "Set alarm", "Set an alarm"
             ],
-            "function":"set_alarm",
-            "arguments":["user_input"]
+            "function": "set_alarm",
+            "arguments": ["user_input"]
+        },
+        {
+            "tag": "play_music",
+            "patterns": [
+                "Play music", "Start a song", "Put on some tunes", "Play a track", "Music please", 
+                "Hit me with a song", "Play something good", "Turn on music", "Play a jam"
+            ],
+            "responses": ["What song or genre you want?", "Let’s get the music rolling—what’s your pick?"]
+        },
+        {
+            "tag": "stop_music",
+            "patterns": [
+                "Stop the music", "Pause it", "Turn off music", "Stop playing", "Cut the song", 
+                "Music off", "Pause the track", "Shut it down", "Stop the tune"
+            ],
+            "responses": ["Music’s off!", "Stopped it for you!"]
+        },
+        {
+            "tag": "call",
+            "patterns": [
+                "Call someone", "Make a call", "Dial a number", "Phone a friend", "Call my mom", 
+                "Ring somebody", "Place a call", "Call up", "Get on the phone"
+            ],
+            "responses": ["Who you wanna call?", "Give me a name or number!"]
+        },
+        {
+            "tag": "send_message",
+            "patterns": [
+                "Send a message", "Text someone", "Message them", "Send a text", "Write a message", 
+                "Text my friend", "Send it", "Drop a text", "Message now"
+            ],
+            "responses": ["Who’s getting the message, and what’s it say?", "Text away—give me the details!"]
+        },
+        {
+            "tag": "navigation",
+            "patterns": [
+                "Get directions", "How do I get there", "Find a route", "Directions to", "Navigate me", 
+                "Where’s this place", "Guide me there", "Take me to", "How to reach"
+            ],
+            "responses": ["Where you headed?", "Tell me your destination!"]
+        },
+        {
+            "tag": "news",
+            "patterns": [
+                "What’s the news", "Latest news", "Tell me the headlines", "What’s happening", "News update", 
+                "What’s new", "Current events", "Breaking news", "What’s on today"
+            ],
+            "responses": ["Here’s the latest scoop!", "What kind of news you after?"]
+        },
+        {
+            "tag": "who_is",
+            "patterns": [
+                "Who’s Elon Musk", "Tell me about Einstein", "Who is Oprah", "Who was Lincoln", "Who’s Bill Gates", 
+                "Who is this person", "Who was Tesla", "Famous person info", "Who’s Taylor Swift"
+            ],
+            "responses": ["I’ll tell you all about them!", "Here’s the lowdown on that person!"]
+        },
+        {
+            "tag": "what_is",
+            "patterns": [
+                "What’s AI", "What is a planet", "Tell me about gravity", "What’s a virus", "What is coding", 
+                "What’s the sun", "Explain time", "What is energy", "What’s a robot"
+            ],
+            "responses": ["Lemme explain that for you!", "Here’s what that is!"]
+        },
+        {
+            "tag": "history",
+            "patterns": [
+                "What happened in 2000", "Tell me about WW1", "What’s the Civil War", "Who won WW2", "What was 9/11", 
+                "History of cars", "What’s the Dark Ages", "Tell me about Egypt", "What happened back then"
+            ],
+            "responses": ["Let’s dive into history!", "Here’s what went down!"]
+        },
+        {
+            "tag": "explain",
+            "patterns": [
+                "How does rain work", "Explain phones", "What makes planes fly", "How’s the moon work", 
+                "Tell me about stars", "How do TVs work", "Explain clocks", "What’s behind thunder"
+            ],
+            "responses": ["I’ll break it down!", "Here’s how that rolls!"]
+        },
+        {
+            "tag": "screen_control",
+            "patterns": [
+                "Turn off screen", "Screen on", "Wake the display", "Sleep the screen", "Turn on monitor", 
+                "Shut off display", "Screen brightness up", "Dim the screen", "Brighten it"
+            ],
+            "responses": ["Screen’s handled!", "Adjusting the display—on or off?"]
+        },
+        {
+            "tag": "software_update",
+            "patterns": [
+                "Check for updates", "Update software", "Is there an update", "Refresh apps", "Update my system", 
+                "Check software version", "Any new updates", "Run an update", "Update now"
+            ],
+            "responses": ["Checking for updates!", "I’ll see if there’s anything new!"]
         }
-
     ]
 }

@@ -1,10 +1,11 @@
 import json
-
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.svm import LinearSVC
+from sklearn.pipeline import make_pipeline
 import sys
 from time import sleep 
 import webbrowser
-from click import argument
-from portalocker import AlreadyLocked
 import pyttsx3 as tts
 import speech_recognition as sr
 import random
@@ -19,185 +20,191 @@ import ctypes
 import os
 import subprocess
 
+# Load intents
+with open("intents.json", "r") as file:
+    data = json.load(file)
 
-# Initialize the engine
+# Prepare training data
+patterns = []
+labels = []
+for intent in data["intents"]:
+    for pattern in intent["patterns"]:
+        patterns.append(pattern.lower())
+        labels.append(intent["tag"])
+
+# Preprocessing and model pipeline
+vectorizer = TfidfVectorizer()
+classifier = LinearSVC()
+model = make_pipeline(vectorizer, classifier)
+
+# Train the model
+model.fit(patterns, labels)
+
+# Function to predict intent
+def predict_intent(text):
+    return model.predict([text.lower()])[0]
+
+# Function to get a response or execute a function
+def get_response(intent, user_input=""):
+    for item in data["intents"]:
+        if item["tag"] == intent:
+            if "function" in item:
+                return globals()[item["function"]](user_input) if "arguments" in item else globals()[item["function"]]()
+            return random.choice(item["responses"])
+    return "Sorry, I didn’t catch that."
+
+# Initialize text-to-speech engine
 engine = tts.init("sapi5")
 speaker = sr.Recognizer()
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[0].id)
 engine.setProperty("rate", 180)
 
-# Load intents from JSON file
-def load_intents(file_path: str) -> dict:
-    with open(file_path, "r") as file:
-        data: dict = json.load(file)
-    return data
-
-
-def find_best_match(user_input: str, intents: list[dict]) -> str | None:
-    user_input_lower = user_input.lower()
-    for intent in intents:
-        for pattern in intent["patterns"]:
-            if pattern in user_input_lower:
-                return intent["tag"]
-    return None
-
-
-def get_response(tag: str, intents: dict,user_input: str) -> str | None:
-    for q in intents["intents"]:
-        if q["tag"] == tag:
-          if "function" in q and "arguments" in q:
-            return globals()[q["function"]](user_input) 
-          elif "function" in q:
-            return globals()[q["function"]]()
-          elif "responses" in q:
-              return random.choice(q["responses"])
-
-    return None
-
-
 def date_and_time():
     date = datetime.now().strftime("%d %B %Y %A")
-    time = datetime.now().strftime("%I:%M %p ") # type: ignore
-    return f"Time is {time} and date is {str(date)}"
-
+    time = datetime.now().strftime("%I:%M %p")
+    return f"Time is {time} and date is {date}."
 
 def nepali_date():
-    date = nepali_datetime.datetime.now().strftime("%d %B %Y %A")
-    return date 
+    return nepali_datetime.datetime.now().strftime("%d %B %Y %A")
 
 def open_app(user_input):
+    user_input = user_input.replace("open", "").strip()
+    
     if "." in user_input:
-        user_input  = user_input.replace("open ","")
-        user_input = user_input.replace("Max","")
-        website_name = "https://www."+user_input
+        website_name = "https://" + user_input
         webbrowser.open(website_name)
-        
     else:
-        user_input  = user_input.replace("open","")
-        user_input = user_input.replace("Max","")
         pyautogui.press("super")
         sleep(1)
         pyautogui.typewrite(user_input)
         sleep(2)
         pyautogui.press('enter')
-    return "Opening "+ user_input
-        
+    
+    return f"Opening {user_input}"
 
 def lock_pc():
-    speak("locking the pc")
+    speak("Locking the PC")
     ctypes.windll.user32.LockWorkStation()
-    return "Locking the pc...."
-    
+    return "Locking the PC..."
 
 def poweroff():
     os.system("shutdown /s /t 10")
-    return "shuttting down pc in 10 seconds"
-
+    return "Shutting down PC in 10 seconds."
 
 def reboot():
-    os.system("shutdown /r /t 10") 
-    return "Restarting pc in 10 seconds"
-
+    os.system("shutdown /r /t 10")
+    return "Restarting PC in 10 seconds."
 
 def sleep_pc():
-    # Put the computer to sleep based on the platform
     if platform.system() == 'Windows':
         subprocess.run(["rundll32.exe", "powrprof.dll,SetSuspendState", "0,1,0"])
     elif platform.system() == 'Linux':
         subprocess.run(["systemctl", "suspend"])
     elif platform.system() == 'Darwin':
         subprocess.run(["pmset", "sleepnow"])
-
+    return "Putting PC to sleep."
 
 def jokes():
-    joke = get_joke()
-    return joke
-
+    return get_joke()
 
 def location():
-    location = geocoder.ip("me")
-    city,country = location.city, location.country
-    notice = "This location is extracted from the IP address. So, It may be inaccurate."
-    print(notice)
-    speak(notice)
-    return "Your current location is "+city+","+country
-    
+    try:
+        loc = geocoder.ip("me")
+        if loc.city and loc.country:
+            return f"Your current location is {loc.city}, {loc.country}."
+        return "Unable to determine location."
+    except Exception as e:
+        return f"Error fetching location: {e}"
 
 def weather():
-  BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
-  API_KEY = open("apikey","r").read()
-  location = geocoder.ip("me")
-  CITY = location.city
-  url = BASE_URL+ "appid="+ API_KEY + "&q="+ CITY
-  response = requests.get(url).json()
-  def temp_converter(temp_kelvin):
-    celsius  = temp_kelvin - 273.15
-    fahernheit = celsius*(9/5) + 32
-    return celsius, fahernheit
-  temp_kelvin = response['main']['temp']
-  temp_celsius, temp_fahernheit = temp_converter(temp_kelvin)
-  temp_feels_like_kelvin = response['main']['feels_like']
-  temp_feels_like_celsius,temp_feels_like_fahernheit = temp_converter(temp_feels_like_kelvin)
-  weather_type = response['weather'][0]["description"]
-  return f"The temperature is {temp_celsius:.2f}°C, but it feels like {temp_feels_like_celsius:.2f}°C and the weather is {weather_type}"
-
+    try:
+        with open("apikey", "r") as f:
+            API_KEY = f.read().strip()
+        
+        loc = geocoder.ip("me")
+        if not loc.city:
+            return "Unable to determine location for weather."
+        
+        url = f"http://api.openweathermap.org/data/2.5/weather?appid={API_KEY}&q={loc.city}&units=metric"
+        response = requests.get(url).json()
+        
+        temp_celsius = response['main']['temp']
+        temp_feels_like = response['main']['feels_like']
+        weather_type = response['weather'][0]["description"]
+        
+        return f"The temperature is {temp_celsius:.2f}°C, but it feels like {temp_feels_like:.2f}°C. The weather is {weather_type}."
+    except Exception as e:
+        return f"Could not fetch weather data. Error: {e}"
 
 def speak(text: str):
     engine.say(text)
     engine.runAndWait()
 
-def exit():
-    sys.exit()
+def exit_assistant():
+    speak("Goodbye!")
+    sys.exit(0)
 
-def listen():
+# Wake word detection
+WAKE_WORD = "xavier"
+
+def listen_for_wake_word():
     with sr.Microphone() as source:
-        print("Listening...")
-        audio = speaker.listen(source,0,8)
-        speaker.adjust_for_ambient_noise(source,duration = 0.5) # type: ignore
+        print("Waiting for wake word 'Xavier'...")
+        speaker.adjust_for_ambient_noise(source, duration=0.5) # type: ignore
+        while True:
+            try:
+                audio = speaker.listen(source, timeout=None, phrase_time_limit=3)
+                text = speaker.recognize_google(audio, language="en").lower() # type: ignore
+                print(f"Heard: {text}")
+                if WAKE_WORD in text:
+                    speak("Yes, I’m here! How can I assist you?")
+                    return True
+            except sr.UnknownValueError:
+                continue  # Keep listening if nothing clear is heard
+            except sr.RequestError as e:
+                print(f"Error with speech recognition service: {e}")
+                speak("There’s an issue with my ears. Please try again.")
+                continue
+
+def listen_for_command():
+    with sr.Microphone() as source:
+        print("Listening for your command...")
+        speaker.adjust_for_ambient_noise(source, duration=0.5) # type: ignore
         try:
+            audio = speaker.listen(source, timeout=8)
             print("Understanding...")
-            text = speaker.recognize_google(audio, language="en",) # type: ignore
-            print("You: ", text)
-            return text.lower()
+            text = speaker.recognize_google(audio, language="en").lower() # type: ignore
+            print("You:", text)
+            return text
         except sr.UnknownValueError:
+            speak("I didn’t catch that. Could you repeat?")
             return ""
         except sr.RequestError as e:
-            print(f"Error with the speech recognition service; {e}")
+            print(f"Error with the speech recognition service: {e}")
+            speak("There’s an issue with the speech service.")
             return ""
-        except TimeoutError as e:
+        except sr.WaitTimeoutError:
+            speak("I didn’t hear anything. Still here for you!")
             return ""
 
 def assistant():
-    intents: dict = load_intents("intents.json")
-
-    speak("Hello, I am Max. How can I help you?")
-    print("\n\n << Note: Say the domain if you want to open the website. For eg: 'youtube.com'>> \n\n")
-    while True:
-        user_input: str = str(listen()).lower()
-
-
-        if user_input == "exit":
-            speak("Goodbye!")
-            break
-        
-            
-
-        best_match: str | None = find_best_match(user_input, intents["intents"])
-
-        if best_match:
-            answer: str = get_response(best_match, intents,user_input) # type: ignore
-            print(f"Assistant: {answer}")
-            speak(answer)     
-
-        
-
-        else:
-            print("Assistant: Sorry, I didn't understand.")
+    speak("Hello, I am Xavier. Say my name to wake me up!")
+    print("\n\n << Note: Say 'Xavier' to activate, then give a command. E.g., 'Xavier open Chrome' >> \n\n")
     
-
-
+    while True:
+        # Step 1: Listen for wake word
+        if listen_for_wake_word():
+            # Step 2: Listen for the actual command after wake word
+            user_input = listen_for_command()
+            if user_input:
+                intent = predict_intent(user_input)
+                response = get_response(intent, user_input)
+                speak(response)
+                print("Assistant:", response)
+                
+                if intent == "goodbye":
+                    exit_assistant()
 
 if __name__ == "__main__":
     assistant()
- 
